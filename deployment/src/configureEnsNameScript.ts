@@ -1,30 +1,22 @@
-import { KnownEnv, getEnvironment } from '@iexec/dataprotector-environments';
 import configureEnsName from './singleFunction/configureEnsName.js';
 import { getIExec } from './utils/utils.js';
 
 const main = async () => {
   const {
     WALLET_PRIVATE_KEY, // app owner
-    ENV,
     APP_ADDRESS, // env value override
     APP_ENS, // env value override
+    RPC_URL,
   } = process.env;
 
   if (!WALLET_PRIVATE_KEY)
     throw Error(`missing privateKey in WALLET_PRIVATE_KEY`);
 
-  const appAddress =
-    APP_ADDRESS ||
-    getEnvironment(ENV as KnownEnv).protectedDataDeliveryDappAddress;
+  const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
-  const ensName =
-    APP_ENS || getEnvironment(ENV as KnownEnv).protectedDataDeliveryDappEns;
+  console.log(`configuring ENS ${APP_ENS} for address ${APP_ADDRESS}`);
 
-  const iexec = getIExec(WALLET_PRIVATE_KEY);
-
-  console.log(`configuring ENS ${ensName} for address ${appAddress}`);
-
-  await configureEnsName(iexec, appAddress, ensName);
+  await configureEnsName(iexec, APP_ADDRESS, APP_ENS);
 };
 
 main().catch((e) => {
