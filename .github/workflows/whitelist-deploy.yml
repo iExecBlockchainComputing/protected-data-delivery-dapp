@@ -1,0 +1,43 @@
+name: deploy-dapp
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          # dev environments
+          - bellecour-dev
+          - arbitrum-sepolia-dev
+          # prod environments (requires a tag starting with dapp-v)
+          - bellecour-prod
+          - arbitrum-sepolia-prod
+          - arbitrum-prod
+
+jobs:
+  deploy-whitelist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          cd deployment
+          npm ci
+
+      - name: Create whitelist contract
+        env:
+          WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
+          DATAPROTECTOR_SHARING_ADDRESS: ${{ secrets.DATAPROTECTOR_SHARING_ADDRESS }}
+        run: |
+          cd deployment
+          npm run create-app-whitelist
