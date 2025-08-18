@@ -33,9 +33,8 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@iexec/dataprotector-environments": "file:../../../environments",
     "ethers": "^6.11.1",
-    "iexec": "^8.7.0",
+    "iexec": "^8.18.0",
     "yup": "^1.4.0"
   }
 }
