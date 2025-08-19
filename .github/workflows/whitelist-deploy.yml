@@ -37,7 +37,7 @@ jobs:
       - name: Create whitelist contract
         env:
           WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
-          DATAPROTECTOR_SHARING_ADDRESS: ${{ secrets.DATAPROTECTOR_SHARING_ADDRESS }}
+          DATAPROTECTOR_SHARING_ADDRESS: ${{ vars.DATAPROTECTOR_SHARING_ADDRESS }}
         run: |
           cd deployment
           npm run create-app-whitelist
