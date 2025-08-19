@@ -1,10 +1,9 @@
 import fs from 'fs/promises';
 import { IExec, utils } from 'iexec';
-import { HOST } from '../../config/config.js';
 
 export const getIExec = (
   privateKey: string,
-  host: string = 'bellecour'
+  host = 'bellecour'
 ): IExec => {
   const ethProvider = utils.getSignerFromPrivateKey(host, privateKey, {
     providers: {},

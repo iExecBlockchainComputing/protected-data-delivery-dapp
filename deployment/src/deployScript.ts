@@ -1,7 +1,5 @@
 import {
   APP_ADDRESS_FILE,
-  DOCKER_IMAGE_TEE_PROD_TAG,
-  DOCKER_IMAGE_TEE_STAGING_TAG,
 } from '../config/config.js';
 import { deployApp } from './singleFunction/deployApp.js';
 import { getIExec, saveToFile } from './utils/utils.js';
