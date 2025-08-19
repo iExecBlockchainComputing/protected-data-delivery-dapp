@@ -14,7 +14,11 @@ const main = async () => {
 
   const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
-  const txHash = await transferOwnership(iexec, APP_ADDRESS, DATAPROTECTOR_SHARING_ADDRESS);
+  const txHash = await transferOwnership(
+    iexec,
+    APP_ADDRESS,
+    DATAPROTECTOR_SHARING_ADDRESS
+  );
   if (!txHash)
     throw Error(
       `Failed to transfer ownership of the dapp ${APP_ADDRESS} to ${DATAPROTECTOR_SHARING_ADDRESS}`

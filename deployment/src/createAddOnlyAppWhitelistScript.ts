@@ -13,7 +13,6 @@ const main = async () => {
 
   const iexec = getIExec(WALLET_PRIVATE_KEY);
 
-
   console.log(
     `creating AddOnlyAppWhitelist for DataprotectorSharing ${DATAPROTECTOR_SHARING_ADDRESS}`
   );

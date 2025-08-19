@@ -1,6 +1,4 @@
-import {
-  APP_ADDRESS_FILE,
-} from '../config/config.js';
+import { APP_ADDRESS_FILE } from '../config/config.js';
 import { deployApp } from './singleFunction/deployApp.js';
 import { getIExec, saveToFile } from './utils/utils.js';
 
@@ -13,7 +11,6 @@ const main = async () => {
     FINGERPRINT,
     SCONIFY_VERSION,
   } = process.env;
-
 
   if (!WALLET_PRIVATE_KEY)
     throw Error(`missing privateKey in WALLET_PRIVATE_KEY`);

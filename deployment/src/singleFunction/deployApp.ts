@@ -1,6 +1,10 @@
 import { IExec } from 'iexec';
-import { APP_NAME, APP_TYPE, DOCKER_IMAGE_NAMESPACE, DOCKER_IMAGE_REPOSITORY } from '../../config/config.js';
-
+import {
+  APP_NAME,
+  APP_TYPE,
+  DOCKER_IMAGE_NAMESPACE,
+  DOCKER_IMAGE_REPOSITORY,
+} from '../../config/config.js';
 
 export const deployApp = async ({
   iexec,
