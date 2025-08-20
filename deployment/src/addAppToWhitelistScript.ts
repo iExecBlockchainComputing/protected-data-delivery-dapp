@@ -14,6 +14,10 @@ const main = async () => {
 
   if (!RPC_URL) throw Error(`missing env RPC_URL`);
 
+  if (!APP_ADDRESS) throw Error(`missing env APP_ADDRESS`);
+
+  if (!WHITELIST_ADDRESS) throw Error(`missing env WHITELIST_ADDRESS`);
+
   const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
   console.log(

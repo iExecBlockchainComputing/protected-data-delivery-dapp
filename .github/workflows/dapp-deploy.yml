@@ -89,6 +89,8 @@ jobs:
   deploy-dapp:
     needs: [extract-tag, sconify]
     runs-on: ubuntu-latest
+    outputs:
+      app-address: ${{ steps.deploy-dapp.outputs.app-address }}
     environment: ${{ inputs.environment }}
     steps:
       - name: Checkout code
@@ -106,6 +108,7 @@ jobs:
           npm ci
 
       - name: Deploy dapp contract
+        id: deploy-dapp
         env:
           WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
           DOCKER_IMAGE_TAG: ${{ needs.sconify.outputs.prod-image-tag }}
@@ -116,6 +119,7 @@ jobs:
         run: |
           cd deployment
           npm run deploy-app
+          echo "app-address=$(cat .app-address)" >> $GITHUB_OUTPUT
 
       - name: Add resource to whitelist
         env:
