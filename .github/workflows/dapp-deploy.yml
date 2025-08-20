@@ -124,7 +124,7 @@ jobs:
       - name: Add resource to whitelist
         env:
           WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
-          APP_ADDRESS: ${{ needs.deploy-dapp.outputs.app-address }}
+          APP_ADDRESS: ${{ steps.deploy-dapp.outputs.app-address }}
           WHITELIST_ADDRESS: ${{ vars.PROTECTED_DATA_DELIVERY_WHITELIST_ADDRESS }}
           RPC_URL: ${{ secrets.RPC_URL }}
         run: |
@@ -134,7 +134,7 @@ jobs:
       - name: Configure ENS
         env:
           WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
-          APP_ADDRESS: ${{ needs.deploy-dapp.outputs.app-address }}
+          APP_ADDRESS: ${{ steps.deploy-dapp.outputs.app-address }}
           APP_ENS: ${{ vars.PROTECTED_DATA_DELIVERY_APP_ENS }}
           RPC_URL: ${{ secrets.RPC_URL }}
         run: |
@@ -146,7 +146,7 @@ jobs:
           WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
           RPC_URL: ${{ secrets.RPC_URL }}
           DATAPROTECTOR_SHARING_ADDRESS: ${{ vars.DATAPROTECTOR_SHARING_ADDRESS }}
-          APP_ADDRESS: ${{ needs.deploy-dapp.outputs.app-address }}
+          APP_ADDRESS: ${{ steps.deploy-dapp.outputs.app-address }}
         run: |
           cd deployment
           npm run transfer-app-to-sharing-contract
