@@ -6,12 +6,16 @@ const main = async () => {
   const {
     WALLET_PRIVATE_KEY, // future whitelist owner
     DATAPROTECTOR_SHARING_ADDRESS, // env value override
+    RPC_URL,
   } = process.env;
 
   if (!WALLET_PRIVATE_KEY)
     throw Error(`missing privateKey in WALLET_PRIVATE_KEY`);
 
-  const iexec = getIExec(WALLET_PRIVATE_KEY);
+  if (!RPC_URL)
+    throw Error(`missing env RPC_URL`);
+
+  const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
   console.log(
     `creating AddOnlyAppWhitelist for DataprotectorSharing ${DATAPROTECTOR_SHARING_ADDRESS}`
