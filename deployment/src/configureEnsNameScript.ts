@@ -12,6 +12,9 @@ const main = async () => {
   if (!WALLET_PRIVATE_KEY)
     throw Error(`missing privateKey in WALLET_PRIVATE_KEY`);
 
+  if (!RPC_URL)
+    throw Error(`missing env RPC_URL`);
+
   const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
   console.log(`configuring ENS ${APP_ENS} for address ${APP_ADDRESS}`);
