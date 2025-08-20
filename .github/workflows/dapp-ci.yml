@@ -2,8 +2,6 @@ name: protected-data-delivery-dapp-ci
 
 on:
   pull_request:
-    branches:
-      - '*'
 
 concurrency:
   group: ${{ github.ref }}-dapp-ci
