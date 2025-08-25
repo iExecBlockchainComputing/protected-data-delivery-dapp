@@ -1,8 +1,6 @@
 name: deployment-dapp-ci
 on:
   pull_request:
-    branches:
-      - '*'
     paths:
       - 'deployment/**'
 
