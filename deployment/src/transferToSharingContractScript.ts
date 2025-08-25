@@ -1,32 +1,29 @@
-import { KnownEnv, getEnvironment } from '@iexec/dataprotector-environments';
 import transferOwnership from './singleFunction/transferOwnership.js';
 import { getIExec } from './utils/utils.js';
 
 const main = async () => {
   const {
-    ENV,
     WALLET_PRIVATE_KEY,
     APP_ADDRESS, // env value override
     DATAPROTECTOR_SHARING_ADDRESS, // env value override
+    RPC_URL,
   } = process.env;
 
   if (!WALLET_PRIVATE_KEY)
     throw Error(`missing privateKey in WALLET_PRIVATE_KEY`);
 
-  const iexec = getIExec(WALLET_PRIVATE_KEY);
+  if (!RPC_URL) throw Error(`missing env RPC_URL`);
 
-  const appAddress =
-    APP_ADDRESS ||
-    getEnvironment(ENV as KnownEnv).protectedDataDeliveryDappAddress;
+  const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
-  const sharingContract =
-    DATAPROTECTOR_SHARING_ADDRESS ||
-    getEnvironment(ENV as KnownEnv).dataprotectorSharingContractAddress;
-
-  const txHash = await transferOwnership(iexec, appAddress, sharingContract);
+  const txHash = await transferOwnership(
+    iexec,
+    APP_ADDRESS,
+    DATAPROTECTOR_SHARING_ADDRESS
+  );
   if (!txHash)
     throw Error(
-      `Failed to transfer ownership of the dapp ${appAddress} to ${sharingContract}`
+      `Failed to transfer ownership of the dapp ${APP_ADDRESS} to ${DATAPROTECTOR_SHARING_ADDRESS}`
     );
 };
 

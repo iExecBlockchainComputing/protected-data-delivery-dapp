@@ -1,33 +1,30 @@
-import { KnownEnv, getEnvironment } from '@iexec/dataprotector-environments';
 import addAppToWhitelist from './singleFunction/addAppToWhitelist.js';
 import { getIExec } from './utils/utils.js';
 
 const main = async () => {
   const {
     WALLET_PRIVATE_KEY, // whitelist operator
-    ENV,
     APP_ADDRESS, // env value override
     WHITELIST_ADDRESS, // env value override
+    RPC_URL,
   } = process.env;
 
   if (!WALLET_PRIVATE_KEY)
     throw Error(`missing privateKey in WALLET_PRIVATE_KEY`);
 
-  const appAddress =
-    APP_ADDRESS ||
-    getEnvironment(ENV as KnownEnv).protectedDataDeliveryDappAddress;
+  if (!RPC_URL) throw Error(`missing env RPC_URL`);
 
-  const whitelistAddress =
-    WHITELIST_ADDRESS ||
-    getEnvironment(ENV as KnownEnv).protectedDataDeliveryWhitelistAddress;
+  if (!APP_ADDRESS) throw Error(`missing env APP_ADDRESS`);
 
-  const iexec = getIExec(WALLET_PRIVATE_KEY);
+  if (!WHITELIST_ADDRESS) throw Error(`missing env WHITELIST_ADDRESS`);
+
+  const iexec = getIExec(WALLET_PRIVATE_KEY, RPC_URL);
 
   console.log(
-    `adding address ${appAddress} to AddOnlyAppWhitelist ${whitelistAddress}`
+    `adding address ${APP_ADDRESS} to AddOnlyAppWhitelist ${WHITELIST_ADDRESS}`
   );
 
-  await addAppToWhitelist(iexec, whitelistAddress, appAddress);
+  await addAppToWhitelist(iexec, WHITELIST_ADDRESS, APP_ADDRESS);
 };
 
 main().catch((e) => {

@@ -1,0 +1,46 @@
+name: deploy-whitelist-contract
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        type: choice
+        options:
+          # dev environments
+          - bellecour-dev
+          - arbitrum-sepolia-dev
+          # prod environments (requires a tag starting with dapp-v)
+          - bellecour-prod
+          - arbitrum-sepolia-prod
+          - arbitrum-prod
+
+jobs:
+  deploy-whitelist:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: deployment/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd deployment
+          npm ci
+
+      - name: Create whitelist contract
+        env:
+          WALLET_PRIVATE_KEY: ${{ secrets.PROTECTED_DATA_DELIVERY_APP_OWNER_PRIVATEKEY }}
+          DATAPROTECTOR_SHARING_ADDRESS: ${{ vars.DATAPROTECTOR_SHARING_ADDRESS }}
+          RPC_URL: ${{ secrets.RPC_URL }}
+        run: |
+          cd deployment
+          npm run create-app-whitelist

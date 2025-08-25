@@ -1,2 +1,7 @@
 coverage
 tmp
+node_modules
+build
+.env
+*.log
+dist
