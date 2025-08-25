@@ -19,8 +19,8 @@ export const deployApp = async ({
   dockerNamespace?: string;
   dockerRepository?: string;
   dockerTag: string;
-  checksum?: string;
-  fingerprint?: string;
+  checksum: string;
+  fingerprint: string;
   sconifyVersion: string;
 }): Promise<string> => {
   const name = APP_NAME;
